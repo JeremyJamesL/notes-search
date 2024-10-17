@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import { InstantSearch, Configure } from "react-instantsearch";
 import Header from "./components/Header";
-import SearchResults from "./components/SearchResults";
+import BreadCrumbs from "./components/BreadCrumbs";
 import Nav from "./components/Nav";
 import Note from "./components/Note";
 import axios from "axios";
@@ -35,9 +35,10 @@ function App() {
   return (
     <InstantSearch searchClient={searchClient} indexName="coding_notes">
       <Configure hitsPerPage={5} />
-      <div>
-        <Header />
-        <main className="flex gap-5 py-5">
+      <div className="bg-zinc-900 text-white">
+        <Header updateCurrentNote={updateCurrentNote} />
+        <BreadCrumbs />
+        <main className="flex gap-5 py-5 px-3 max-w-7xl m-auto">
           <Nav updateSelectedNote={updateCurrentNote} />
           <Note content={noteContent} />
         </main>

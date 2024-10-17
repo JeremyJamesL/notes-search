@@ -1,21 +1,22 @@
-import { useState } from "react";
 import { SearchBox } from "react-instantsearch";
 import SearchResults from "./SearchResults";
 
-function Header() {
-  const [resultsHidden, updateResultsHidden] = useState(true);
-
-  const queryHook = (query, search) => {
-    updateResultsHidden(query.length === 0);
-    search(query);
-  };
+function Header({ updateCurrentNote }) {
   return (
     <header className="border-b-2 py-5">
-      <div className="max-w-4xl m-auto flex justify-between">
-        <h1 className="text-xl">Jezl notes search__</h1>
+      <div className="max-w-7xl m-auto px-3 flex justify-between">
+        <h1 className="text-lg font-mono">
+          Jezl notes search
+          <span className="text-amber-600 inline-block">_</span>
+        </h1>
         <div className="relative">
-          <SearchBox queryHook={queryHook} />
-          <SearchResults isHidden={resultsHidden} />
+          <SearchBox
+            classNames={{
+              input: "bg-transparent border-0 text-white",
+              form: "bg-transparent border-zinc-500 border-[1px] rounded-full active:border-red",
+            }}
+          />
+          <SearchResults updateCurrentNote={updateCurrentNote} />
         </div>
       </div>
     </header>

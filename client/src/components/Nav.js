@@ -26,7 +26,7 @@ function Nav({ updateSelectedNote }) {
               return (
                 <li>
                   <details open>
-                    <summary>{el}</summary>
+                    <summary className="hover:bg-slate-800">{el}</summary>
                     <ul>
                       {menuItems[key][el].map((subEl) => {
                         return (
@@ -50,7 +50,7 @@ function Nav({ updateSelectedNote }) {
 
   return (
     <nav className="h-full">
-      <ul className="h-full menu bg-base-200 rounded-box w-56">{menu}</ul>
+      <ul className="h-full menu bg-transparent rounded-box w-56">{menu}</ul>
     </nav>
   );
 }

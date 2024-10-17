@@ -1,5 +1,12 @@
 import Markdown from "markdown-to-jsx";
-import SyntaxHighlighter from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import {
+  darcula,
+  solarizedlight,
+  dark,
+  funky,
+  okaidia,
+} from "react-syntax-highlighter/dist/esm/styles/prism"; // or choose another theme
 
 function Note({ content }) {
   return (
@@ -28,7 +35,18 @@ function Note({ content }) {
               },
             },
             code: {
-              component: SyntaxHighlighter,
+              component: ({ className, children }) => {
+                const language = className?.replace("lang-", "") || "text"; // Extract language from className
+                return (
+                  <SyntaxHighlighter
+                    language={language}
+                    style={okaidia}
+                    PreTag="div"
+                  >
+                    {children}
+                  </SyntaxHighlighter>
+                );
+              },
             },
           },
         }}
