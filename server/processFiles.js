@@ -17,12 +17,14 @@ const processFiles = () => {
         return el.text;
       });
       const splitFileName = file.split("/");
-      const tempTitle = `${splitFileName[1]} > ${splitFileName[2]}`;
-      const title = tempTitle.replace(/\d+|\.md|\.|/g, "");
+      const tempCategory = `${splitFileName[0]} / ${splitFileName[1]} / ${splitFileName[2]}`;
+      const category = tempCategory.replace(/\d+|\.md|\.|/g, "");
+      const title = headings[0];
       const newObj = {
         objectID: file,
         title,
         headings,
+        category,
       };
       objectsArr.push(newObj);
     }
@@ -36,7 +38,7 @@ const sendToAlgolia = async () => {
       indexName: "coding_notes",
       body: el,
     });
-    console.log(response);
+    console.log("The following objects were updated:", response);
   });
 };
 
