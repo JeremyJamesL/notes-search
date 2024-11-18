@@ -1,11 +1,15 @@
 import fs from "fs";
 import path from "path";
+import "dotenv/config";
 import * as md2json from "@moox/markdown-to-json";
-import { algoliasearch } from "algoliasearch";
+import { searchClient } from "@algolia/client-search";
 const notesDir = "./notes";
 
 const files = fs.readdirSync(notesDir, { recursive: true });
-const client = algoliasearch("YSWWVAX5RB", "5b56c1d87d54fd65faec0642712a1f46");
+const client = searchClient(
+  process.env.ALGOLIA_APP_ID,
+  process.env.ALGOLIA_WRITE_KEY
+);
 const objectsArr = [];
 
 const processFiles = () => {
@@ -29,7 +33,6 @@ const processFiles = () => {
       objectsArr.push(newObj);
     }
   });
-  console.log(objectsArr);
 };
 
 const sendToAlgolia = async () => {

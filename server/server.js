@@ -2,6 +2,7 @@ import { readdir } from "node:fs/promises";
 import fs from "fs";
 import express from "express";
 import cors from "cors";
+import path from "node:path";
 const port = 3001;
 const app = express();
 
@@ -14,6 +15,8 @@ app.get("/notes/all-notes", async (req, res) => {
   const files = await readdir(notesDir, { recursive: true });
 
   files.forEach((file) => {
+    if (file.includes(".DS_Store") || file.includes("/images")) return; // Exclude these filetypes if they exist. This logic is NOT foolproof and should change in the future
+
     const count = (file.match(/\//g) || []).length;
 
     if (count === 0) {
@@ -32,7 +35,6 @@ app.get("/notes/all-notes", async (req, res) => {
 
 app.get("/notes/get-note", async (req, res) => {
   const filePath = `./notes/${req.query.note}`;
-  console.log(filePath);
 
   fs.readFile(filePath, "utf-8", (err, data) => {
     if (err) {
